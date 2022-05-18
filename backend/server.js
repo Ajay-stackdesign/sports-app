@@ -1,27 +1,23 @@
 const app = require("./app")
 
 const dotenv = require("dotenv")
-// const cloudinary = require("cloudinary")
 const connectDatabase = require("./config/database")
-
+const cloudinary = require("cloudinary")
 dotenv.config({ path: "backend/config/.env" })
-// Config
-// if (process.env.NODE_ENV !== "PRODUCTION") {
-//     require("dotenv").config({ path: "api/config/.env" });
-// }
+
 
 connectDatabase()
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.use("/", (req, res) => {
     res.send("hello world")
 })
 
-
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
